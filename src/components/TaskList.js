@@ -1,11 +1,10 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteTask } from "../features/tasks/taskSlice";
 
 const TaskList = () => {
-  const stateTasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
-  console.log(stateTasks);
 
   const handleDelete = (id) => {
     dispatch(deleteTask(id));
@@ -13,17 +12,36 @@ const TaskList = () => {
 
   return (
     <div className="w-4/6">
+      <header className="flex justify-between items-center py-4">
+        <h1>Tasks ({tasks.length})</h1>
+
+        <Link
+          to="/create-task"
+          className="bg-indigo-600 px-2 py-1 rounded-sm text-sm shadow-sm"
+        >
+          Create Task
+        </Link>
+      </header>
+
       <div className="grid grid-cols-3 gap-3">
-        {stateTasks.map((task) => (
-          <div className="bg-gray-200 p-4 rounded-md" key={task.id}>
+        {tasks.map((task) => (
+          <div className="bg-neutral-700 p-4 rounded-md" key={task.id}>
             <header className="flex justify-between">
               <h3 className="text-lg font-bold">{task.title}</h3>
-              <button
-                onClick={() => handleDelete(task.id)}
-                className="bg-red-500 px-2 py-1 text-xs rounded-md"
-              >
-                delete
-              </button>
+              <div className="flex gap-x-2">
+                <Link
+                  to={`/edit-task/${task.id}`}
+                  className="bg-zinc-600 px-2 py-1 text-xs rounded-md self-center"
+                >
+                  Edit
+                </Link>
+                <button
+                  onClick={() => handleDelete(task.id)}
+                  className="bg-red-500 px-2 py-1 text-xs rounded-md"
+                >
+                  delete
+                </button>
+              </div>
             </header>
             <p>{task.description}</p>
             <p className="text-xs text-slate-400">{task.id}</p>
@@ -32,8 +50,6 @@ const TaskList = () => {
       </div>
     </div>
   );
-};
-
-// description
+}
 
 export default TaskList;

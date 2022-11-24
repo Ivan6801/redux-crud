@@ -12,6 +12,10 @@ const TaskList = () => {
 
   return (
     <div className="w-4/6">
+      <h1>
+        This is a simple Web application CRUD (Create, Read, Update, Delete)
+        using React and Redux Toolkit.
+      </h1>
       <header className="flex justify-between items-center py-4">
         <h1>Tasks ({tasks.length})</h1>
 
@@ -50,6 +54,6 @@ const TaskList = () => {
       </div>
     </div>
   );
-}
+};
 
 export default TaskList;
